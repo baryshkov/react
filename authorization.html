@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    html, body {
+    margin: 0;
+    height: 100%;
+    }
+
+    body {
+    background-color: #ffffff;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    }
+
+    #app {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding-top: 10px;
+    }
+
+    #app div div {
+    height: 100%;
+    }
+
+    #app div div div {
+    position: relative;
+    height: auto;
+    }
+
+    h1, h2 {
+    margin-left: 5%;
+    margin-right: 5%;
+    }
+
+    ul {
+    list-style-type: none;
+    padding: 0;
+    }
+
+    label {
+    display: block;
+    margin: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    }
+
+    nav a {
+    margin:12px;
+    text-transform: uppercase;
+    font-size: 10px;
+    }
+
+    button {
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    background-color: #F4595B;
+    border-radius: 8px;
+    border-bottom: 4px solid #C24648;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Oxygen', sans-serif;
+    letter-spacing: 2px;
+    }
+
+    button:hover {
+    background-color: #FF7375;
+    border: none;
+    border-radius: 8px;
+    border-bottom: 4px solid #C24648;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Oxygen', sans-serif;
+    letter-spacing: 2px;
+    }
+
+    button:active {
+    background-color: #C24648;
+    border: none;
+    border-radius: 8px;
+    border-bottom: 4px solid #C24648;
+    color: #CCC;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Oxygen', sans-serif;
+    letter-spacing: 2px;
+    }
+
+    #authorization {
+    max-width: 600px;
+    width: 70%;
+    margin: 100px auto;
+    border: 1px solid black;
+    }
+
+    input {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    }
+
+    button, input[type="submit"] {
+    margin: 20px;
+    padding: 7px 35px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+  // import React from 'react';
+  // import ReactDOM from 'react-dom';
+
+  class Contact extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        password: 'swordfish',
+        authorized: false
+      };
+      this.authorize = this.authorize.bind(this);
+    }
+
+    authorize(e) {
+      const password = e.target.querySelector(
+          'input[type="password"]').value;
+      const auth = password == this.state.password;
+      this.setState({
+        authorized: auth
+      });
+    }
+
+    render() {
+      let h1;
+      let login;
+      let contactInfo = (
+          <ul>
+            <li>
+              client@example.com
+            </li>
+            <li>
+              555.555.5555
+            </li>
+          </ul>
+      );
+
+      if (this.state.authorized) {
+        h1 = 'Contact';
+      }
+      else {
+        h1 = 'Enter the password';
+      }
+
+      login = (
+          <form action="#" onSubmit={this.authorize}>
+            <input type="password" placeholder="password" />
+            <input type="submit" placeholder="password" />
+          </form>
+      );
+      return (
+          <div id="authorization">
+            <h1>{h1}</h1>
+            {this.state.authorized ? contactInfo : login}
+          </div>
+      );
+    }
+  }
+
+  ReactDOM.render(
+      <Contact />,
+      document.getElementById('app')
+  );
+</script>
+<!--
+  Note: this page is a great way to try React but it's not suitable for production.
+  It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+  Read this section for a production-ready setup with JSX:
+  https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+  In a larger project, you can use an integrated toolchain that includes JSX instead:
+  https://reactjs.org/docs/create-a-new-react-app.html
+
+  You can also use React without JSX, in which case you can remove Babel:
+  https://reactjs.org/docs/react-without-jsx.html
+-->
+</body>
+</html>
