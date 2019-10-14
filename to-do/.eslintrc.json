@@ -12,6 +12,7 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -26,6 +27,7 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "prettier/prettier": "error",
-        "max-len": ["error", 100, 2, { "ignoreUrls": true }]
+        "max-len": ["error", 100, 2, { "ignoreUrls": true }],
+        "react/state-in-constructor": "off"
     }
 }
