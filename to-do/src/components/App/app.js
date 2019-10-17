@@ -2,7 +2,7 @@ import React from 'react';
 import AppHeader from '../AppHeader';
 import SearchPanel from '../SearchPanel';
 import TodoList from '../TodoList';
-import AddItem from '../AddItemButton/add-item';
+import ItemAddForm from '../AddItemButton/item-add-form';
 import ItemStatusFilter from '../ItemStatusFilter';
 
 import './app.css';
@@ -16,6 +16,7 @@ class App extends React.Component {
       this.createTodoItem('Make Awesome App'),
       this.createTodoItem('Hail Devil'),
     ],
+    searchData: [],
   };
 
   deleteItem = id => {
@@ -38,36 +39,39 @@ class App extends React.Component {
     });
   };
 
+  toggleProperty = (arr, id, propName) => {
+    const newData = [...arr];
+    newData.forEach(item => {
+      if (id === item.id) item[propName] = !item[propName];
+    });
+    return newData;
+  };
+
   onToggleImportant = id => {
     this.setState(({ todoData }) => {
-      const newData = [...todoData];
-      newData.forEach(item => {
-        if (id === item.id) {
-          item.important = !item.important;
-        }
-      });
       return {
-        todoData: newData,
+        todoData: this.toggleProperty(todoData, id, 'important'),
       };
     });
   };
 
   onToggleDone = id => {
     this.setState(({ todoData }) => {
-      const newData = [...todoData];
-      newData.forEach(item => {
-        if (id === item.id) {
-          item.done = !item.done;
-        }
-      });
       return {
-        todoData: newData,
+        todoData: this.toggleProperty(todoData, id, 'done'),
       };
     });
   };
 
+  onSearch = text => {
+    console.log(text);
+    this.setState(({ todoData }) => {
+      const newData = todoData.filter(({label}) => label.includes(text));
+      return { searchData: newData };
+    });
+  };
+
   createTodoItem(label) {
-    console.log(this.state);
     return {
       label,
       important: false,
@@ -77,21 +81,24 @@ class App extends React.Component {
   }
 
   render() {
+    const { todoData, searchData } = this.state;
+    const todoCount = todoData.filter(el => !el.done).length;
+    const doneCount = todoData.filter(el => el.done).length;
     return (
       <div className="todo-app">
-        <AppHeader toDo={1} done={3} />
+        <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
-          <SearchPanel />
+          <SearchPanel onSearch={this.onSearch} />
 
           <ItemStatusFilter />
         </div>
         <TodoList
-          todos={this.state.todoData}
+          todos={searchData.length === 0 ? todoData : searchData}
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
         />
-        <AddItem onAddition={this.addItem} />
+        <ItemAddForm onAddition={this.addItem} />
       </div>
     );
   }
