@@ -2,16 +2,9 @@ import React from 'react';
 import './search-panel.css';
 
 class SearchPanel extends React.Component {
-  state = {
-    searchInput: '',
-  };
 
   onInput = e => {
-    e.preventDefault();
-    console.log(e.target.value);
-    this.setState({ searchInput: e.target.value },
-                  this.props.onSearch(this.state.searchInput));
-    setTimeout(console.log, 2*1000, this.state.searchInput)
+    this.props.onSearch(e.target.value);
   };
 
   render() {
@@ -25,7 +18,6 @@ class SearchPanel extends React.Component {
         placeholder={searchText}
         style={searchStyle}
         onChange={this.onInput}
-        value={this.state.searchInput}
       />
     );
   }

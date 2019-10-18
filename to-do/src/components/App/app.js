@@ -64,7 +64,6 @@ class App extends React.Component {
   };
 
   onSearch = text => {
-    console.log(text);
     this.setState(({ todoData }) => {
       const newData = todoData.filter(({label}) => label.includes(text));
       return { searchData: newData };
