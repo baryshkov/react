@@ -1,37 +1,29 @@
 import React from 'react';
 
 class ItemStatusFilter extends React.Component {
+  buttons = [
+    { name: 'all', label: 'All' },
+    { name: 'active', label: 'Active' },
+    { name: 'done', label: 'Done' },
+  ];
+
+  filter = () => {
+    return '';
+  };
+
   render() {
-    return (
-      <div className="btn-group">
-        <button className="btn btn-info" type="button">
-          All
+    const { filter, onFilter } = this.props;
+    const buttons = this.buttons.map(({ name, label }) => {
+      const isActive = filter === name;
+      const clazz = isActive ? 'btn-info' : 'btn-outline-secondary';
+      return (
+        <button className={`btn ${clazz}`} type="button" key={name} onClick={() => onFilter(name)}>
+          {label}
         </button>
-        <button className="btn btn-outline-secondary" type="button">
-          Active
-        </button>
-        <button className="btn btn-outline-secondary" type="button">
-          Done
-        </button>
-      </div>
-    );
+      );
+    });
+    return <div className="btn-group">{buttons}</div>;
   }
 }
-
-// const ItemStatusFilter = () => {
-//   return (
-//     <div className="btn-group">
-//       <button className="btn btn-info" type="button">
-//         All
-//       </button>
-//       <button className="btn btn-outline-secondary" type="button">
-//         Active
-//       </button>
-//       <button className="btn btn-outline-secondary" type="button">
-//         Done
-//       </button>
-//     </div>
-//   );
-// };
 
 export default ItemStatusFilter;

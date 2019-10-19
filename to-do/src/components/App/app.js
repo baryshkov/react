@@ -17,6 +17,8 @@ class App extends React.Component {
       this.createTodoItem('Hail Devil'),
     ],
     searchData: [],
+    searchString: '',
+    filter: 'all',
   };
 
   deleteItem = id => {
@@ -64,9 +66,14 @@ class App extends React.Component {
   };
 
   onSearch = text => {
-    this.setState(({ todoData }) => {
-      const newData = todoData.filter(({label}) => label.includes(text));
-      return { searchData: newData };
+    this.setState(() => {
+      return { searchString: text };
+    });
+  };
+
+  onFilter = activeFilter => {
+    this.setState(() => {
+      return { filter: activeFilter };
     });
   };
 
@@ -79,20 +86,36 @@ class App extends React.Component {
     };
   }
 
+  search(items, search) {
+    return items.filter(({ label }) => label.toLowerCase().includes(search.toLowerCase()));
+  }
+
+  filter(items, filter) {
+    if (filter === 'active') {
+      return items.filter(({ done }) => !done);
+    }
+    if (filter === 'done') {
+      return items.filter(({ done }) => done);
+    }
+    return items;
+  }
+
   render() {
-    const { todoData, searchData } = this.state;
+    const { todoData, searchString, filter } = this.state;
     const todoCount = todoData.filter(el => !el.done).length;
     const doneCount = todoData.filter(el => el.done).length;
+
+    const visibleElements = this.filter(this.search(todoData, searchString), filter);
     return (
       <div className="todo-app">
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel onSearch={this.onSearch} />
 
-          <ItemStatusFilter />
+          <ItemStatusFilter onFilter={this.onFilter} filter={filter} />
         </div>
         <TodoList
-          todos={searchData.length === 0 ? todoData : searchData}
+          todos={visibleElements}
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
