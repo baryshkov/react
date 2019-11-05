@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ItemAddForm extends React.Component {
   state = {
@@ -6,16 +7,17 @@ class ItemAddForm extends React.Component {
   };
 
   onLabelChange = e => {
-    this.setState({label: e.target.value});
+    this.setState({ label: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
     this.props.onAddition(this.state.label);
-    this.setState({label: ''});
+    this.setState({ label: '' });
   };
 
   render() {
+    const { label } = this.state;
     return (
       <form className="item-add-form d-flex mt-3" onSubmit={this.onSubmit}>
         <input
@@ -23,17 +25,18 @@ class ItemAddForm extends React.Component {
           className="form-control"
           onChange={this.onLabelChange}
           placeholder="What needs to be done?"
-          value={this.state.label}
+          value={label}
         />
-        <button
-          // onClick={}
-          className="btn btn-primary btn-md ml-2 float-right"
-        >
+        <button type="button" className="btn btn-primary btn-md ml-2 float-right">
           +
         </button>
       </form>
     );
   }
 }
+
+ItemAddForm.propTypes = {
+  onAddition: PropTypes.func.isRequired,
+};
 
 export default ItemAddForm;

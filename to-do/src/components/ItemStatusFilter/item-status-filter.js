@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ItemStatusFilter extends React.Component {
   buttons = [
@@ -25,5 +26,10 @@ class ItemStatusFilter extends React.Component {
     return <div className="btn-group">{buttons}</div>;
   }
 }
+
+ItemStatusFilter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  onFilter: PropTypes.func.isRequired,
+};
 
 export default ItemStatusFilter;

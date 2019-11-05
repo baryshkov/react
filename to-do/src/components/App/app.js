@@ -16,7 +16,6 @@ class App extends React.Component {
       this.createTodoItem('Make Awesome App'),
       this.createTodoItem('Hail Devil'),
     ],
-    searchData: [],
     searchString: '',
     filter: 'all',
   };

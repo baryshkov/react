@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './app-header.css';
 
 const AppHeader = ({ toDo, done }) => {
@@ -10,6 +11,11 @@ const AppHeader = ({ toDo, done }) => {
       </h2>
     </div>
   );
+};
+
+AppHeader.propTypes = {
+  toDo: PropTypes.number.isRequired,
+  done: PropTypes.number.isRequired,
 };
 
 export default AppHeader;
