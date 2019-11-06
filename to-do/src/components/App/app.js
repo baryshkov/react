@@ -2,7 +2,7 @@ import React from 'react';
 import AppHeader from '../AppHeader';
 import SearchPanel from '../SearchPanel';
 import TodoList from '../TodoList';
-import ItemAddForm from '../AddItemButton/item-add-form';
+import ItemAddForm from '../ItemAddForm';
 import ItemStatusFilter from '../ItemStatusFilter';
 
 import './app.css';
@@ -12,7 +12,12 @@ class App extends React.Component {
 
   state = {
     todoData: [
-      this.createTodoItem('Voenkomat'),
+      {
+        label: 'Военкомат',
+        important: false,
+        done: true,
+        id: 1594,
+      },
       this.createTodoItem('Make Awesome App'),
       this.createTodoItem('Hail Devil'),
     ],

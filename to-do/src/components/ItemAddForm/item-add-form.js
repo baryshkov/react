@@ -27,7 +27,7 @@ class ItemAddForm extends React.Component {
           placeholder="What needs to be done?"
           value={label}
         />
-        <button type="button" className="btn btn-primary btn-md ml-2 float-right">
+        <button type="submit" className="btn btn-primary btn-md ml-2 float-right">
           +
         </button>
       </form>
